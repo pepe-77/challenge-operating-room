@@ -637,59 +637,71 @@
             document.getElementById("question-title").innerHTML = `${q.title} <span id="info-icon" onclick="showInfo()">ℹ</span>`;
             document.getElementById("info-box").classList.remove("show");
 
-            const container = document.getElementById("question-body");
-            container.innerHTML = '';
+const container = document.getElementById("question-body");
+container.innerHTML = '';
 
-            if (q.type === "checkbox") {
-                container.innerHTML = `
-                                    <div class="question-image-options-container">
-                                        <div id="image-container"><img src="${q.image}" /></div>
-                                        <form id="options-form">
-                                            ${q.options.map(opt => `<label><input type="checkbox" name="option" value="${opt}"> ${opt}</label><br>`).join('')}
-                                        </form>
-                                    </div>
-                                `;
-            } else if (q.type === "drag") {
-                container.innerHTML = `
-                                    <div class="drag-container">
-                                        <div class="question-area">
-                                            <img src="${q.image}" class="main-image" />
-                                            <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                                        </div>
-                                        <div class="options">
-                                            <img src="/Resorces/Images/Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                                            <img src="/Resorces/Images/Lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                                            <img src="/Resorces/Images/Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
-                                        </div>
-                                    </div>
-                                `;
-            } else if (q.type === "drag2") {
-                container.innerHTML = `
-                                    <div class="drag-container">
-                                        <div class="question-area">
-                                            <img src="${q.image}" class="main-image" />
-                                            <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                                        </div>
-                                        <div class="options">
-                                            <img src="/Resorces/Images/Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                                            <img src="/Resorces/Images/Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                                            <img src="/Resorces/Images/Faco.png" draggable="true" ondragstart="drag(event)" id="lama3" />
-                                        </div>
-                                    </div>
-                                `;
-            } else if (q.type === "dragVideo") {
-                container.innerHTML = `
-            <div class="video-container">
-                <video id="myVideo" controls>
-                    <source src="${q.videoSrc}" type="video/mp4" />
-                    Il tuo browser non supporta il video.
-                </video>
-                <div id="dropZone" class="drop-zone-video"  ondrop="handleVideoDrop(event, '${q.correctId}')" ondragover="allowDrop(event)"></div>
+if (q.type === "checkbox") {
+    container.innerHTML = `
+        <div class="question-image-options-container">
+            <div id="image-container">
+                <a href="${q.image}" target="_blank">
+                    <img src="${q.image}" alt="Strumento" class="img-fluid" />
+                </a>
             </div>
-            <div class="options video-options">
-                ${q.options.map(opt => `<img src="${opt.src}" id="${opt.id}" draggable="true" ondragstart="drag(event)" />`).join('')}
+            <form id="options-form">
+                ${q.options.map(opt => `
+                    <label>
+                        <input type="checkbox" name="option" value="${opt}"> ${opt}
+                    </label><br>
+                `).join('')}
+            </form>
+        </div>
+    `;
+} else if (q.type === "drag") {
+    container.innerHTML = `
+        <div class="drag-container">
+            <div class="question-area">
+                <img src="${q.image}" class="main-image" />
+                <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             </div>
-        `;
+            <div class="options">
+                <img src="/Resorces/Images/Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                <img src="/Resorces/Images/Lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                <img src="/Resorces/Images/Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+            </div>
+        </div>
+    `;
+} else if (q.type === "drag2") {
+    container.innerHTML = `
+        <div class="drag-container">
+            <div class="question-area">
+                <img src="${q.image}" class="main-image" />
+                <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </div>
+            <div class="options">
+                <img src="/Resorces/Images/Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                <img src="/Resorces/Images/Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                <img src="/Resorces/Images/Faco.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+            </div>
+        </div>
+    `;
+} else if (q.type === "dragVideo") {
+    container.innerHTML = `
+        <div class="video-container">
+            <video id="myVideo" controls>
+                <source src="${q.videoSrc}" type="video/mp4" />
+                Il tuo browser non supporta il video.
+            </video>
+            <div id="dropZone" class="drop-zone-video" ondrop="handleVideoDrop(event, '${q.correctId}')" ondragover="allowDrop(event)"></div>
+        </div>
+        <div class="options video-options">
+            ${q.options.map(opt => `
+                <img src="${opt.src}" id="${opt.id}" draggable="true" ondragstart="drag(event)" />
+            `).join('')}
+        </div>
+    `;
+}
+
 
                 const video = document.getElementById("myVideo");
                 const dropZone = document.getElementById("dropZone");
