@@ -453,7 +453,7 @@
         <h1>Challenge: Strumentario Chirurgico</h1>
 
         <div class="intro-image-wrapper">
-            <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Senza titolo.png" alt="Immagine introduttiva" class="intro-image" />
+            <img src="/Resorces/Images/Senza titolo.png" alt="Immagine introduttiva" class="intro-image" />
         </div>
 
         <p>
@@ -552,8 +552,8 @@
     </div>
 
     <!-- Audio -->
-    <audio id="audio-correct" src="/Users/stefanopepe/Desktop/Challenge/Resorces/Sound/success.mp3" preload="auto"></audio>
-    <audio id="audio-wrong" src="/Users/stefanopepe/Desktop/Challenge/Resorces/Sound/error.mp3" preload="auto"></audio>
+    <audio id="audio-correct" src="/Resorces/Sound/success.mp3" preload="auto"></audio>
+    <audio id="audio-wrong" src="/Resorces/Sound/error.mp3" preload="auto"></audio>
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -569,27 +569,27 @@
             {
                 title: "Domanda 1/20 <br><br><br> Indica la funzione di questo strumento",
                 type: "checkbox",
-                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinza-da-presa.jpg",
+                image: "/Resorces/Images/pinza-da-presa.jpg",
                 options: ["Pinza da presa", "Pinza da emostasi", "Pinza da dissezione"],
                 correctAnswers: ["Pinza da emostasi"]
             },
             {
                 title: "Domanda 2/20 <br><br><br> Come si chiama questo strumento?",
                 type: "checkbox",
-                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinza-da-presa.jpg",
+                image: "/Resorces/Images/pinza-da-presa.jpg",
                 options: ["kocher rette", "Rochester", "Heiss rette"],
                 correctAnswers: ["Heiss rette"]
             },
             {
                 title: "Domanda 3/20 <br><br><br> Quale lama può montare questo manico da Bisturi?",
                 type: "drag",
-                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/PortaLama.jpg",
+                image: "/Resorces/Images/PortaLama.jpg",
                 correctId: "lama3"
             },
             {
                 title: "Domanda 4/20 <br><br><br> A quale intervento chirurgico sono associati questi strumenti?",
                 type: "drag2",
-                image: "file://///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Facoservitore.png",
+                image: "/Resorces/Images/Facoservitore.png",
                 correctId: "lama3"
             },
             {
@@ -599,9 +599,9 @@
                 pauseTime: 4,
                 correctId: "correctTool",
                 options: [
-                    { src: "/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Crescent.png", id: "wrong1" },
-                    { src: "/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 1.2.png", id: "wrong2" },
-                    { src: "/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 2.2.png", id: "correctTool" }
+                    { src: "/Resorces/Images/Crescent.png", id: "wrong1" },
+                    { src: "/Resorces/Images/Lama 1.2.png", id: "wrong2" },
+                    { src: "/Resorces/Images/Lama 2.2.png", id: "correctTool" }
                 ]
             }
 
@@ -657,9 +657,9 @@
                                             <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                                         </div>
                                         <div class="options">
-                                            <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                                            <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                                            <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                                            <img src="/Resorces/Images/Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                                            <img src="/Resorces/Images/Lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                                            <img src="/Resorces/Images/Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
                                         </div>
                                     </div>
                                 `;
@@ -671,9 +671,9 @@
                                             <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                                         </div>
                                         <div class="options">
-                                            <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                                            <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                                            <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Faco.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                                            <img src="/Resorces/Images/Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                                            <img src="/Resorces/Images/Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                                            <img src="/Resorces/Images/Faco.png" draggable="true" ondragstart="drag(event)" id="lama3" />
                                         </div>
                                     </div>
                                 `;
