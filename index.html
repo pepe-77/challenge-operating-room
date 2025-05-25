@@ -61,14 +61,15 @@
                 color: #6ba98f;
                 margin-bottom: 2rem;
             }
+
             #intro-container p {
-  text-align: justify;
-  line-height: 1.6;
-  font-size: 1.6rem;
-  color: orange;
-  margin-bottom: 2rem;
-  margin-top: 50px; /* Aggiungi uno spazio sopra il paragrafo (prova con valori diversi) */
-}
+                text-align: justify;
+                line-height: 1.6;
+                font-size: 1.6rem;
+                color: orange;
+                margin-bottom: 2rem;
+                margin-top: 50px; /* Aggiungi uno spazio sopra il paragrafo (prova con valori diversi) */
+            }
 
         #intro-buttons {
             display: flex;
@@ -269,6 +270,7 @@
             #info-icon-link:hover {
                 color: #e07b39; /* Colore più scuro al passaggio del mouse */
             }
+
         footer {
             position: absolute; /* Posiziona il footer rispetto al suo antenato posizionato (il body) */
             bottom: 0; /* Lo fissa al fondo del body */
@@ -277,6 +279,62 @@
             padding: 10px 0; /* Un po' di spazio sopra e sotto il testo */
             text-align: center; /* Allinea il testo al centro */
         }
+
+        #anagrafica-content {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.15);
+        }
+
+        #anagrafica-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px 30px;
+            font-size: 14px;
+        }
+
+            #anagrafica-form label {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            #anagrafica-form input {
+                width: 100%;
+                padding: 6px 8px;
+                font-size: 14px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / 3;
+        }
+
+        #anagrafica-form button {
+            grid-column: 2;
+            justify-self: end;
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #6ca58b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            #anagrafica-form button:hover {
+                background-color: #4d866a;
+            }
+
         #anagrafica-content form {
             display: flex; /* Rende il form un flex container */
             flex-direction: row; /* Dispone gli elementi in riga (orizzontalmente) */
@@ -297,15 +355,18 @@
             #anagrafica-content form button {
                 /* Stili per il bottone se necessario */
             }
+
         .question-image-options-container {
             display: flex; /* Allinea gli elementi orizzontalmente */
             align-items: flex-start; /* Allinea gli elementi verticalmente all'inizio */
             gap: 20px; /* Aggiunge spazio tra l'immagine e le opzioni */
             margin-bottom: 20px; /* Aggiunge un po' di spazio sotto ogni domanda */
         }
+
         #anagrafica-modal .modal-content {
-            width: 800px; /* Esempio: imposta la larghezza a 600 pixel */
+            width: 1300px; /* Esempio: imposta la larghezza a 600 pixel */
         }
+
         #image-container {
             flex-shrink: 0;
             width: 700px; /* Imposta una larghezza fissa per il contenitore */
@@ -410,6 +471,7 @@
             justify-content: center;
             gap: 16px;
         }
+
             .video-options img {
                 max-height: 80px;
                 width: auto;
@@ -444,10 +506,68 @@
                 max-width: 100%;
                 max-height: 100%;
             }
+        /* Modal overlay */
+        .start-modal2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
 
+        #playMusicBtn {
+            padding: 2em 4em;
+            font-size: 2em;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+            #playMusicBtn:hover {
+                background-color: #218838;
+                transform: scale(1.05);
+            }
+              .label-point {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+  }
+
+  .label-point:hover .tooltip {
+    display: block;
+  }
+
+  .tooltip {
+    display: none;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background: black;
+    color: white;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 14px;
+    pointer-events: none;
+    user-select: none;
+  }
     </style>
 </head>
 <body>
+
     <!-- Intro Page -->
     <div id="intro-container" class="show">
         <h1>Challenge: Strumentario Chirurgico</h1>
@@ -484,29 +604,36 @@
             </p>
         </div>
 
-
-        <div class="modal-content" id="anagrafica-content" style="width: 100%; max-width: 1500px; background-color: #f9f9f9; padding: 25px; border-radius: 10px; box-shadow: 0 0 12px rgba(0,0,0,0.15);">
-
-            <h2>Inserisci i tuoi dati</h2>
+        <div class="modal-content" id="anagrafica-content">
+            <h2 style="text-align:center; margin-bottom: 20px;">Inserisci i tuoi dati</h2>
             <form id="anagrafica-form">
-                <label for="nome">Nome:</label><br />
-                <input type="text" id="nome" name="nome" required=required /><br /><br />
-
-                <label for="cognome">Cognome:</label><br />
-                <input type="text" id="cognome" name="cognome" required=required /><br /><br />
-
-                <label for="professione">Professione:</label><br />
-                <input type="text" id="professione" name="professione" required=required /><br /><br />
-
-                <label for="anni-servizio">Anni di Servizio:</label><br />
-                <input type="text" id="anni-servizio" name="anni-servizio" required=required /><br /><br />
-
-                <label for="email">Email:</label><br />
-                <input type="email" id="email" name="email" required=required /><br /><br />
-
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" required />
+                </div>
+                <div class="form-group">
+                    <label for="cognome">Cognome</label>
+                    <input type="text" id="cognome" name="cognome" required />
+                </div>
+                <div class="form-group">
+                    <label for="professione">Professione</label>
+                    <input type="text" id="professione" name="professione" required />
+                </div>
+                <div class="form-group">
+                    <label for="anni-servizio">Anni di Servizio</label>
+                    <input type="text" id="anni-servizio" name="anni-servizio" required />
+                </div>
+                <div class="form-group full-width">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required />
+                </div>
                 <button type="submit">Continua</button>
             </form>
         </div>
+        
+        <!-- Sezione dati che comparirà sotto il grafico -->
+        <div id="dati-anagrafici"></div>
+
     </div>
 
 
@@ -520,7 +647,7 @@
             <h2 id="question-title">
                 Domanda
                 <a href="#" id="info-icon-link">
-                    <img src="Resorces/icon/icons8-informazioni.gif" alt="Informazioni" width="20" height="20" />
+                    <img src="Resources/icon/icons8-informazioni.gif" alt="Informazioni" width="20" height="20" />
                 </a>
             </h2>
         </div>
@@ -546,70 +673,127 @@
         <button onclick="restartQuiz()">Termina Prova</button>
     </div>
     <div id="results-container" class="hidden">
-        <canvas id="radar-chart" width="400" height="400"></canvas>
-        <div id="results-details" class="mt-4 text-center"></div>
+        <div id="datiAnagraficiDiv"></div>
+        <div id="riepilogoUtenteQuiz"></div> <canvas id="radar-chart" width="400" height="400"></canvas>
+        <div id="results-details"></div>
         <button onclick="restartQuiz()">Ricomincia</button>
     </div>
 
+    <!-- Radar Chart e Risultati -->
+    <div id="results-container" class="hidden">
+        <h2>Risultati Challenge</h2>
+        <canvas id="radar-chart" width="400" height="400"></canvas>
+        <div id="dati-anagrafici"></div>
+        <div id="riepilogoUtenteQuiz"></div>
+        <div id="results-details"></div>
+        <button onclick="restartQuiz()">Ricomincia</button>
+        <button onclick="restartQuiz()">Termina Prova</button>
+    </div>
+
     <!-- Audio -->
-    <audio id="audio-correct" src="/Resorces/Sound/success.mp3" preload="auto"></audio>
-    <audio id="audio-wrong" src="/Resorces/Sound/error.mp3" preload="auto"></audio>
+    <audio id="audio-correct" src="/Users/stefanopepe/Desktop/Challenge/Resorces/Sound/success.mp3" preload="auto"></audio>
+    <audio id="audio-wrong" src="/Users/stefanopepe/Desktop/Challenge/Resorces/Sound/error.mp3" preload="auto"></audio>
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Modal centrato -->
+    <div class="start-modal2" id="startModal2">
+        <button id="playMusicBtn">▶️ START</button>
+    </div>
+
+    <audio id="backgroundAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" loop></audio>
+
+    <script>const playBtn = document.getElementById("playMusicBtn");
+        const audio = document.getElementById("backgroundAudio");
+        const modal = document.getElementById("startModal2");
+        let stopTimeout;
+
+        playBtn.addEventListener("click", () => {
+            audio.play()
+                .then(() => {
+                    modal.style.display = "none"; // Chiudi il modal
+                    console.log("Musica avviata");
+
+                    // Imposta un timer di 30 secondi per fermare la musica
+                    stopTimeout = setTimeout(() => {
+                        audio.pause();
+                        audio.currentTime = 0; // Torna all'inizio
+                        alert("La musica è finita dopo 60 secondi");
+                    }, 60000);
+                })
+                .catch(err => {
+                    alert("Errore: il browser ha bloccato la riproduzione automatica.");
+                    console.error(err);
+                });
+        });
+
+        // Se l'audio finisce prima dei 30s, cancella il timeout e avvisa
+        audio.addEventListener("ended", () => {
+            clearTimeout(stopTimeout);
+            alert("La musica è finita");
+        });</script>
 
     <!-- Script principale -->
-    <script>let currentQuestion = 0;
+    <Script>let currentQuestion = 0;
         let score = 0;
         let timer;
         let timeLeft = 30;
         let userData = {};
+        let questionResults = []; // Array per salvare i risultati di ogni domanda
 
         const questions = [
             {
                 title: "Domanda 1/20 <br><br><br> Indica la funzione di questo strumento",
                 type: "checkbox",
-                image: "/Resorces/Images/pinza-da-presa.jpg",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinza-da-presa.jpg",
                 options: ["Pinza da presa", "Pinza da emostasi", "Pinza da dissezione"],
                 correctAnswers: ["Pinza da emostasi"]
             },
             {
                 title: "Domanda 2/20 <br><br><br> Come si chiama questo strumento?",
                 type: "checkbox",
-                image: "/Resorces/Images/pinza-da-presa.jpg",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinza-da-presa.jpg",
                 options: ["kocher rette", "Rochester", "Heiss rette"],
                 correctAnswers: ["Heiss rette"]
             },
             {
                 title: "Domanda 3/20 <br><br><br> Quale lama può montare questo manico da Bisturi?",
                 type: "drag",
-                image: "/Resorces/Images/PortaLama.jpg",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/PortaLama.jpg",
                 correctId: "lama3"
+            },
+            {
+                title: "Domanda 3/20 <br><br><br> Quale lama può montare questo manico da Bisturi?",
+                type: "drag",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/PortaLama2.jpg",
+                correctId: "lama2"
             },
             {
                 title: "Domanda 4/20 <br><br><br> A quale intervento chirurgico sono associati questi strumenti?",
                 type: "drag2",
-                image: "/Resorces/Images/Facoservitore.png",
-                correctId: "lama3"
+                image: "file://///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Facoservitore.png",
+                correctId: "lama1"
             },
             {
                 title: "Domanda 5/20 <br><br><br> Trascina lo strumento corretto nel video per continuare",
                 type: "dragVideo",
-                videoSrc: "Resorces/Video/cataratta.mp4",
+                videoSrc: "Resorces/Video/colecistectomiaLaparoscopica.mp4",
                 pauseTime: 4,
                 correctId: "correctTool",
                 options: [
-                    { src: "/Resorces/Images/Crescent.png", id: "wrong1" },
-                    { src: "/Resorces/Images/Lama 1.2.png", id: "wrong2" },
-                    { src: "/Resorces/Images/Lama 2.2.png", id: "correctTool" }
+                    { src: "/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Crescent.png", id: "wrong1" },
+                    { src: "/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 1.2.png", id: "wrong2" },
+                    { src: "/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 2.2.png", id: "correctTool" }
                 ]
             }
-
         ];
 
         function startChallenge() {
             document.getElementById("intro-container").classList.remove("show");
+            document.getElementById("intro-container").classList.add("hidden"); // Nasconde l'introduzione
+
             document.getElementById("anagrafica-modal").classList.remove("hidden");
+            document.getElementById("anagrafica-modal").classList.add("show"); // Mostra il modale anagrafico
         }
 
         function notReady() {
@@ -618,15 +802,18 @@
 
         function handleAnagraficaSubmit(event) {
             event.preventDefault();
+            // Salva tutti i dati del form anagrafico
             userData.nome = document.getElementById('nome').value;
             userData.cognome = document.getElementById('cognome').value;
+            userData.professione = document.getElementById('professione').value;
+            userData.anniServizio = document.getElementById('anni-servizio').value;
             userData.email = document.getElementById('email').value;
 
-            // Chiudi la modal dell'anagrafica
-            document.getElementById("anagrafica-modal").classList.add("hidden");
+            document.getElementById("anagrafica-modal").classList.remove("show");
+            document.getElementById("anagrafica-modal").classList.add("hidden"); // Nasconde il modale anagrafico
 
-            // Avvia il quiz
-            document.getElementById("quiz-container").classList.add("show");
+            document.getElementById("quiz-container").classList.remove("hidden");
+            document.getElementById("quiz-container").classList.add("show"); // Mostra il container del quiz
             loadQuestion();
         }
 
@@ -637,71 +824,55 @@
             document.getElementById("question-title").innerHTML = `${q.title} <span id="info-icon" onclick="showInfo()">ℹ</span>`;
             document.getElementById("info-box").classList.remove("show");
 
-const container = document.getElementById("question-body");
-container.innerHTML = '';
+            const container = document.getElementById("question-body");
+            container.innerHTML = '';
 
-if (q.type === "checkbox") {
-    container.innerHTML = `
-        <div class="question-image-options-container">
-            <div id="image-container">
-                <a href="${q.image}" target="_blank">
-                    <img src="${q.image}" alt="Strumento" class="img-fluid" />
-                </a>
-            </div>
-            <form id="options-form">
-                ${q.options.map(opt => `
-                    <label>
-                        <input type="checkbox" name="option" value="${opt}"> ${opt}
-                    </label><br>
-                `).join('')}
-            </form>
-        </div>
-    `;
-} else if (q.type === "drag") {
-    container.innerHTML = `
-        <div class="drag-container">
-            <div class="question-area">
-                <img src="${q.image}" class="main-image" />
-                <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            </div>
-            <div class="options">
-                <img src="/Resorces/Images/Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                <img src="/Resorces/Images/Lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                <img src="/Resorces/Images/Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
-            </div>
-        </div>
-    `;
-} else if (q.type === "drag2") {
-    container.innerHTML = `
-        <div class="drag-container">
-            <div class="question-area">
-                <img src="${q.image}" class="main-image" />
-                <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            </div>
-            <div class="options">
-                <img src="/Resorces/Images/Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                <img src="/Resorces/Images/Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                <img src="/Resorces/Images/Faco.png" draggable="true" ondragstart="drag(event)" id="lama3" />
-            </div>
-        </div>
-    `;
-} else if (q.type === "dragVideo") {
-    container.innerHTML = `
-        <div class="video-container">
-            <video id="myVideo" controls>
-                <source src="${q.videoSrc}" type="video/mp4" />
-                Il tuo browser non supporta il video.
-            </video>
-            <div id="dropZone" class="drop-zone-video" ondrop="handleVideoDrop(event, '${q.correctId}')" ondragover="allowDrop(event)"></div>
-        </div>
-        <div class="options video-options">
-            ${q.options.map(opt => `
-                <img src="${opt.src}" id="${opt.id}" draggable="true" ondragstart="drag(event)" />
-            `).join('')}
-        </div>
-    `;
-}
-
+            if (q.type === "checkbox") {
+                container.innerHTML = `
+                <div class="question-image-options-container">
+                    <div id="image-container"><img src="${q.image}" /></div>
+                    <form id="options-form">
+                        ${q.options.map(opt => `<label><input type="checkbox" name="option" value="${opt}"> ${opt}</label><br>`).join('')}
+                    </form>
+                </div>`;
+            } else if (q.type === "drag") {
+                container.innerHTML = `
+                <div class="drag-container">
+                    <div class="question-area">
+                        <img src="${q.image}" class="main-image" />
+                        <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    </div>
+                    <div class="options">
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                    </div>
+                </div>`;
+            } else if (q.type === "drag2") {
+                container.innerHTML = `
+                <div class="drag-container">
+                    <div class="question-area">
+                        <img src="${q.image}" class="main-image" />
+                        <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    </div>
+                    <div class="options">
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Faco.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                    </div>
+                </div>`;
+            } else if (q.type === "dragVideo") {
+                container.innerHTML = `
+                <div class="video-container">
+                    <video id="myVideo" controls>
+                        <source src="${q.videoSrc}" type="video/mp4" />
+                        Il tuo browser non supporta il video.
+                    </video>
+                    <div id="dropZone" class="drop-zone-video" ondrop="handleVideoDrop(event, '${q.correctId}')" ondragover="allowDrop(event)"></div>
+                </div>
+                <div class="options video-options">
+                    ${q.options.map(opt => `<img src="${opt.src}" id="${opt.id}" draggable="true" ondragstart="drag(event)" />`).join('')}
+                </div>`;
 
                 const video = document.getElementById("myVideo");
                 const dropZone = document.getElementById("dropZone");
@@ -715,7 +886,6 @@ if (q.type === "checkbox") {
                     }
                 });
             }
-
 
             startTimer();
         }
@@ -732,31 +902,61 @@ if (q.type === "checkbox") {
         function submitAnswer(fromTimeout = false) {
             clearInterval(timer);
             const q = questions[currentQuestion];
+            let isCorrect = false;
+            let userAnswer = 'N/A';
+            let correctAnswer = q.correctAnswers || q.correctId;
 
             if (q.type === "checkbox") {
                 const selected = Array.from(document.querySelectorAll('input[name="option"]:checked')).map(el => el.value);
+                userAnswer = selected.join(', ');
                 const correct = q.correctAnswers;
                 if (JSON.stringify(selected.sort()) === JSON.stringify(correct.sort())) {
                     score += 10;
                     document.getElementById("score").textContent = score;
                     showModal("🎉 Bravo! Risposta corretta!");
+                    isCorrect = true;
                 } else {
                     showModal(fromTimeout ? "⏰ Tempo scaduto!" : "❌ Risposta sbagliata.");
                 }
-            } else if (q.type === "drag") {
+            } else if (q.type === "drag" || q.type === "drag2") {
                 const dropped = document.querySelector("#drop-zone img");
+                if (dropped) {
+                    userAnswer = dropped.id;
+                }
                 if (dropped && dropped.id === q.correctId) {
                     score += 10;
                     document.getElementById("score").textContent = score;
                     showModal("✅ Corretto!");
+                    isCorrect = true;
                 } else {
                     showModal(fromTimeout ? "⏰ Tempo scaduto!" : "❌ Oggetto errato.");
                 }
+            } else if (q.type === "dragVideo") {
+                showModal(fromTimeout ? "⏰ Tempo scaduto!" : "❌ Risposta non fornita.");
+                isCorrect = false;
+                userAnswer = 'Tempo scaduto / Non risposto';
+                questionResults.push({
+                    questionTitle: q.title.split('<br>')[0],
+                    correct: isCorrect,
+                    userAnswer: userAnswer,
+                    correctAnswer: correctAnswer
+                });
+                setTimeout(() => {
+                    nextQuestion();
+                }, 1000);
+                return;
             }
+
+            questionResults.push({
+                questionTitle: q.title.split('<br>')[0],
+                correct: isCorrect,
+                userAnswer: userAnswer,
+                correctAnswer: correctAnswer
+            });
 
             setTimeout(() => {
                 nextQuestion();
-            }, 1000); // Ritardo di 1 secondo prima di proseguire
+            }, 1000);
         }
 
         function showModal(message) {
@@ -766,20 +966,17 @@ if (q.type === "checkbox") {
 
         function nextQuestion() {
             document.getElementById("modal").classList.add("hidden");
-
             currentQuestion++;
-
             if (currentQuestion < questions.length) {
                 loadQuestion();
             } else {
                 document.getElementById("quiz-container").classList.remove("show");
+                document.getElementById("quiz-container").classList.add("hidden");
+
                 document.getElementById("results-container").classList.remove("hidden");
+                document.getElementById("results-container").classList.add("show");
                 renderRadarChart();
             }
-        }
-
-        function finishQuiz() {
-            alert("Grazie per aver partecipato al quiz!");
         }
 
         function startTimer() {
@@ -811,95 +1008,201 @@ if (q.type === "checkbox") {
             const correctAnswers = score / 10;
             const wrongAnswers = totalQuestions - correctAnswers;
             const percentage = (score / (totalQuestions * 10)) * 100;
-
-            // Valutazione competenze
             let skillLevel = '';
-            if (percentage >= 85) {
-                skillLevel = 'Autonomo e Formatore';
-            } else if (percentage >= 60) {
-                skillLevel = 'Autonomo';
-            } else {
-                skillLevel = 'Principiante';
-            }
+            if (percentage >= 85) skillLevel = 'Autonomo e Formatore';
+            else if (percentage >= 60) skillLevel = 'Autonomo';
+            else skillLevel = 'Principiante';
 
-            // Mostra info testuali
-            document.getElementById('results-details').innerHTML = `
-        <p><strong>Risposte corrette:</strong> ${correctAnswers} / ${totalQuestions}</p>
-        <p><strong>Risposte sbagliate:</strong> ${wrongAnswers}</p>
-        <p><strong>Punteggio:</strong> ${score} / ${totalQuestions * 10}</p>
-        <p><strong>Livello competenze:</strong> ${skillLevel}</p>
-    `;
+            // Inietta i dati anagrafici nel div dedicato
+            document.getElementById('datiAnagraficiDiv').innerHTML = `
+            <h3>Dati Anagrafici Inseriti:</h3>
+            <p><strong>Nome:</strong> ${userData.nome || 'N/A'}</p>
+            <p><strong>Cognome:</strong> ${userData.cognome || 'N/A'}</p>
+            <p><strong>Professione:</strong> ${userData.professione || 'N/A'}</p>
+            <p><strong>Anni di Servizio:</strong> ${userData.anniServizio || 'N/A'}</p>
+            <p><strong>Email:</strong> ${userData.email || 'N/A'}</p>
+        `;
+
+            // Riepilogo personalizzato iniettato nel NUOVO DIV
+            const riepilogoPersonalizzatoHtml = `
+            <p>Il/La Sig. <strong>${userData.nome || ''} ${userData.cognome || ''}</strong>, con <strong>${userData.anniServizio || 'N/A'}</strong> anni di servizio e email <strong>${userData.email || 'N/A'}</strong>,
+            ha risposto correttamente a <strong>${correctAnswers} domande su ${totalQuestions}</strong>.</p>
+            <hr>
+        `;
+            document.getElementById('riepilogoUtenteQuiz').innerHTML = riepilogoPersonalizzatoHtml;
+
+
+            // Aggiungi gli altri dettagli del quiz (che già avevi)
+            let detailedResultsHtml = `
+            <h3>Riepilogo Quiz:</h3>
+            <p><strong>Risposte corrette:</strong> ${correctAnswers} / ${totalQuestions}</p>
+            <p><strong>Risposte sbagliate:</strong> ${wrongAnswers}</p>
+            <p><strong>Punteggio totale:</strong> ${score} / ${totalQuestions * 10}</p>
+            <p><strong>Livello competenze:</strong> ${skillLevel}</p>
+            <hr>
+            <h3>Dettaglio Risposte:</h3>
+            <ul>
+                ${questionResults.map((res, index) => `
+                    <li>
+                        <strong>Domanda ${index + 1}:</strong> ${res.questionTitle} -
+                        ${res.correct ? '<span style="color: green;">Corretta</span>' : '<span style="color: red;">Sbagliata</span>'}
+                        ${res.userAnswer ? `(La tua risposta: ${res.userAnswer})` : ''}
+                        ${res.correctAnswer && !res.correct ? `(Risposta corretta: ${Array.isArray(res.correctAnswer) ? res.correctAnswer.join(', ') : res.correctAnswer})` : ''}
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+            document.getElementById('results-details').innerHTML = detailedResultsHtml; // Qui usiamo = perché il riepilogo è nel suo div
+
 
             new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['Conoscenza', 'Precisione', 'Velocità', 'Memoria', 'Analisi', 'Corrette', 'Sbagliate'],
+                    labels: ['Correttezza (%)', 'Velocità (punti/sec)', 'Conoscenza complessiva', 'Precisione generale', 'Risposte Corrette', 'Risposte Sbagliate'],
                     datasets: [
                         {
                             label: 'Prestazioni',
-                            data: [percentage, percentage, percentage, percentage, percentage, correctAnswers, wrongAnswers],
+                            data: [
+                                percentage,
+                                score / (30 * totalQuestions),
+                                percentage,
+                                (correctAnswers / totalQuestions) * 100,
+                                correctAnswers,
+                                wrongAnswers
+                            ],
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 2
-                        },
-                        {
-                            label: `Livello: ${skillLevel}`,
-                            data: [0, 0, 0, 0, 0, 0, 0], // fittizio, solo per mostrare etichetta
-                            borderColor: 'rgba(255, 99, 132, 0)',
-                            pointRadius: 0,
-                            borderWidth: 0
                         }
                     ]
                 },
                 options: {
                     plugins: {
-                        legend: {
-                            labels: {
-                                font: {
-                                    size: 14
-                                }
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: 'Radar delle Competenze',
-                            font: {
-                                size: 18
-                            }
-                        }
+                        legend: { labels: { font: { size: 14 } } },
+                        title: { display: true, text: 'Radar delle Competenze', font: { size: 18 } }
                     },
                     scales: {
                         r: {
                             suggestedMin: 0,
-                            suggestedMax: 100
+                            suggestedMax: 100,
+                            pointLabels: {
+                                font: {
+                                    size: 12
+                                }
+                            },
+                            ticks: {
+                                beginAtZero: true
+                            }
                         }
                     }
                 }
             });
         }
 
-
-
         function restartQuiz() {
             currentQuestion = 0;
             score = 0;
+            questionResults = [];
             document.getElementById("score").textContent = score;
+
+            document.getElementById("results-container").classList.remove("show");
             document.getElementById("results-container").classList.add("hidden");
+
+            document.getElementById("intro-container").classList.remove("hidden");
             document.getElementById("intro-container").classList.add("show");
         }
+
         function handleVideoDrop(ev, correctId) {
             ev.preventDefault();
             const draggedId = ev.dataTransfer.getData("text");
+            const q = questions[currentQuestion];
+            let isCorrect = false;
 
             if (draggedId === correctId) {
                 alert("✅ Strumento corretto!");
-                document.getElementById("dropZone").style.display = "none";
-                document.getElementById("myVideo").play();
+                score += 10;
+                document.getElementById("score").textContent = score;
+                isCorrect = true;
             } else {
                 alert("❌ Strumento sbagliato. Riprova.");
             }
-        }</script>
 
+            questionResults.push({
+                questionTitle: q.title.split('<br>')[0],
+                correct: isCorrect,
+                userAnswer: draggedId,
+                correctAnswer: correctId
+            });
+
+            document.getElementById("dropZone").style.display = "none";
+            document.getElementById("myVideo").play();
+
+            setTimeout(() => {
+                nextQuestion();
+            }, 1000);
+        }
+        // ... (il resto del tuo codice JavaScript)
+
+        function finishQuiz() {
+            quizContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+
+            // Calcola il numero di risposte corrette
+            const correctAnswersCount = questionResults.filter(isCorrect => isCorrect).length;
+            const totalQuestionsCount = questions.length;
+
+            // Crea la frase riassuntiva con i dati anagrafici e il risultato del quiz
+            const riepilogoPersonalizzato = `
+            <h3>Dati Anagrafici Inseriti:</h3>
+            <p><strong>Nome:</strong> ${userData.nome || 'N/A'}</p>
+            <p><strong>Cognome:</strong> ${userData.cognome || 'N/A'}</p>
+            <p><strong>Professione:</strong> ${userData.professione || 'N/A'}</p>
+            <p><strong>Anni di Servizio:</strong> ${userData.anniServizio || 'N/A'}</p>
+            <p><strong>Email:</strong> ${userData.email || 'N/A'}</p>
+            <hr>
+            <p>Il/La Sig. <strong>${userData.nome || ''} ${userData.cognome || ''}</strong>,
+            con <strong>${userData.anniServizio || 'N/A'}</strong> anni di servizio e email <strong>${userData.email || 'N/A'}</strong>,
+            ha risposto correttamente a <strong>${correctAnswersCount} domande su ${totalQuestionsCount}</strong>.</p>
+            <hr>
+            <h3>Riepilogo Quiz:</h3>
+            <p>Punteggio totale: ${score} punti su ${questions.length * 10}</p>
+        `;
+
+            // Inietta tutto il contenuto nel div dati-anagrafici
+            datiAnagraficiDiv.innerHTML = riepilogoPersonalizzato;
+
+            const radarData = questionResults.map(c => c ? 100 : 0);
+
+            const ctx = document.getElementById('radar-chart').getContext('2d');
+            if (window.radarChart) window.radarChart.destroy();
+
+            window.radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: questions.map((_, i) => `Domanda ${i + 1}`),
+                    datasets: [{
+                        label: 'Percentuale Risposte Corrette',
+                        data: radarData,
+                        fill: true,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointBackgroundColor: 'rgb(54, 162, 235)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(54, 162, 235)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: { stepSize: 20 }
+                        }
+                    }
+                }
+            });
+        }</Script>
 </body>
 <footer>
     <div align="center">
@@ -908,3 +1211,7 @@ if (q.type === "checkbox") {
 </footer>
 
 </html>
+
+
+
+
