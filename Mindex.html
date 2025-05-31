@@ -573,7 +573,7 @@
         <h1>Challenge: Strumentario Chirurgico</h1>
 
         <div class="intro-image-wrapper">
-            <img src="Senza%20titolo.png" alt="Immagine introduttiva" class="intro-image" />
+            <img src="Senza titolo.png" alt="Immagine introduttiva" class="intro-image" />
         </div>
 
         <p>
@@ -719,7 +719,7 @@
                         audio.pause();
                         audio.currentTime = 0; // Torna all'inizio
                         alert("");
-                    }, 60000);
+                    }, 100000);
                 })
                 .catch(err => {
                     alert("Errore: il browser ha bloccato la riproduzione automatica.");
@@ -743,49 +743,161 @@
 
         const questions = [
             {
-                title: "Domanda 1/20 Indica la funzione di questo strumento",
+                title: "Domanda 1/20 <br><br><br> Indica la funzione di questo strumento",
                 type: "checkbox",
-                image: "pinza-da-presa.jpg",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinza-da-presa.jpg",
                 options: ["Pinza da presa", "Pinza da emostasi", "Pinza da dissezione"],
                 correctAnswers: ["Pinza da emostasi"]
             },
             {
-                title: "Domanda 2/20 Come si chiama questo strumento?",
+                title: "Domanda 2/20 <br><br><br> Come si chiama questo strumento?",
                 type: "checkbox",
-                image: "pinza-da-presa.jpg",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinza-da-presa.jpg",
                 options: ["kocher rette", "Rochester", "Heiss rette"],
                 correctAnswers: ["Heiss rette"]
             },
             {
-                title: "Domanda 3/20 Quale lama può montare questo manico da Bisturi?",
+                title: "Domanda 3/20 <br><br><br> Quale lama può montare questo manico da Bisturi?",
                 type: "drag",
-                image: "PortaLama.jpg",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/PortaLama.jpg",
                 correctId: "lama3"
             },
             {
-                title: "Domanda 3/20 Quale lama può montare questo manico da Bisturi?",
+                title: "Domanda 3/20 <br><br><br> Quale lama può montare questo manico da Bisturi?",
                 type: "drag",
-                image: "PortaLama2.jpg",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/PortaLama2.jpg",
                 correctId: "lama2"
             },
             {
-                title: "Domanda 4/20 A quale intervento chirurgico sono associati questi strumenti?",
+                title: "Domanda 4/20 <br><br><br> A quale intervento chirurgico sono associati questi strumenti?",
                 type: "drag2",
-                image: "Facoservitore.png",
+                image: "file://///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Facoservitore.png",
                 correctId: "lama1"
             },
             {
-                title: "Domanda 5/20 Trascina lo strumento corretto nel video per continuare",
+                title: "Domanda 5/20 <br><br><br> Trascina lo strumento corretto nel video per continuare",
                 type: "dragVideo",
-                videoSrc: "colecistectomiaLaparoscopica.mp4",
+                videoSrc: "Resorces/Video/colecistectomiaLaparoscopica.mp4",
                 pauseTime: 4,
                 correctId: "correctTool",
                 options: [
-                    { src: "Crescent.png", id: "wrong1" },
-                    { src: "Lama 1.2.png", id: "wrong2" },
-                    { src: "Lama 2.2.png", id: "correctTool" }
+                    { src: "/Users/stefanopepe/Desktop/Challenge/Resorces/Images/cisio2.png", id: "wrong1" },
+                    { src: "/Users/stefanopepe/Desktop/Challenge/Resorces/Images/ultra.png", id: "wrong2" },
+                    { src: "/Users/stefanopepe/Desktop/Challenge/Resorces/Images/cisio.png", id: "correctTool" }
                 ]
-            }
+            },
+            {
+                title: "Domanda 6/20 <br><br><br> Trascina il nome sul punto corretto dell’immagine",
+                type: "multiDrag",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Serv.png",
+                dropZones: [
+                    { label: "PortaAghi", top: 40, left: 100 },
+                    { label: "Farabef", top: 50, left: 20 }
+                ],
+                labels: ["PortaAghi", "Farabef"]
+            },
+            {
+                title: "Domanda 7/20 <br><br><br> Trascina il nome sul punto corretto dell’immagine",
+                type: "multiDrag",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/cito.jpg",
+                dropZones: [
+                    { label: "Cremascoli", top: 75, left: 300 },
+                    { label: "Pinze da ansa", top: 200, left: 140 },
+                    { label: "Valve", top: 240, left: 310 }
+                ],
+                labels: ["Cremascoli", "Pinze da Ansa"]
+            },
+            {
+                title: "Domanda 8/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Uncino_da_Osso.png",
+                options: ["Uncino Da osso", "Rochester", "Bonn"],
+                correctAnswers: ["Uncino Da osso"]
+            },
+            {
+                title: "Domanda 9/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Martello.png",
+                options: ["kocher rette", "Martello", "Heiss rette"],
+                correctAnswers: ["Martello"]
+            },
+            {
+                title: "Domanda 10/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinza-da-presa.jpg",
+                options: ["kocher rette", "Rochester", "Heiss rette"],
+                correctAnswers: ["Heiss rette"]
+            },
+            {
+                title: "Domanda 11/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Uncino.png",
+                options: ["Uncino", "Rochester", "Hoskin"],
+                correctAnswers: ["Uncino"]
+            },
+            {
+                title: "Domanda 12/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Scalpello.png",
+                options: ["Adson", "Scalpello", "Heiss rette"],
+                correctAnswers: ["Scalpello"]
+            },
+            {
+                title: "Domanda 13/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Adson.png",
+                options: ["kocher rette", "Hoskin", "Adson"],
+                correctAnswers: ["Adson"]
+            },
+            {
+                title: "Domanda 14/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Pinza_di_Klemmer.png",
+                options: ["kocher rette", "Rochester", "Pinza_di_Klemmer"],
+                correctAnswers: ["Pinza_di_Klemmer"]
+            },
+            {
+                title: "Domanda 15/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/Pinza_Foerster.png",
+                options: ["Pinza Foerster", "Rochester", "Heiss rette"],
+                correctAnswers: ["Pinza Foerster"]
+            },
+            {
+                title: "Domanda 16/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/mathieu.png",
+                options: ["kocher rette", "mathieu", "Heiss rette"],
+                correctAnswers: ["mathieu"]
+            },
+            {
+                title: "Domanda 17/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinze-da-presa3.png",
+                options: ["kocher rette", "Elis", "Heiss rette"],
+                correctAnswers: ["Ellis"]
+            },
+            {
+                title: "Domanda 18/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinze-da-presa2.png",
+                options: ["kocher rette", "Rochester", "Babcock"],
+                correctAnswers: ["Babcock"]
+            },
+            {
+                title: "Domanda 19/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinza-da-presa.jpg",
+                options: ["kocher rette", "Rochester", "Heiss rette"],
+                correctAnswers: ["Heiss rette"]
+            },
+            {
+                title: "Domanda 20/20 <br><br><br> Come si chiama questo strumento?",
+                type: "checkbox",
+                image: "file:///Users/stefanopepe/Desktop/Challenge/Resorces/Images/pinza-da-presa.jpg",
+                options: ["kocher rette", "Rochester", "Heiss rette"],
+                correctAnswers: ["Heiss rette"]
+            },
         ];
 
         function startChallenge() {
@@ -843,9 +955,9 @@
                         <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                     </div>
                     <div class="options">
-                        <img src="Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                        <img src="lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                        <img src="Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
                     </div>
                 </div>`;
             } else if (q.type === "drag2") {
@@ -856,11 +968,43 @@
                         <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                     </div>
                     <div class="options">
-                        <img src="Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                        <img src="Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                        <img src="Faco.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                        <img src="/Users/stefanopepe/Desktop/Challenge/Resorces/Images/Faco.png" draggable="true" ondragstart="drag(event)" id="lama1" />
                     </div>
                 </div>`;
+            } else if (q.type === "multiDrag") {
+                let imageHtml = `<div class="image-container" id="image-multi" style="position: relative;">`;
+                imageHtml += `<img src="${q.image}" alt="Immagine" style="width: 50%;" />`;
+                q.dropZones.forEach(dz => {
+                    imageHtml += `<div class="drop-zone" data-label="${dz.label}" 
+                        ondrop="dropLabel(event)" 
+                        ondragover="allowDrop(event)" 
+                        style="position: absolute; top: ${dz.top}px; left: ${dz.left}px;">
+                        ?
+                    </div>`;
+                });
+                imageHtml += `</div>`;
+
+                let labelsHtml = `<div class="label-list">`;
+                q.labels.forEach(label => {
+                    labelsHtml += `<div class="draggable-label" 
+                        draggable="true" 
+                        ondragstart="dragLabel(event)" 
+                        data-label="${label}" 
+                        style="margin: 5px; padding: 5px; background-color: lightgray; cursor: grab;">
+                        ${label}
+                    </div>`;
+                });
+                labelsHtml += `</div>`;
+
+                container.innerHTML = `
+                    <h2></h2>
+                    ${imageHtml}
+                    ${labelsHtml}
+                    <!-- <button class="check-btn" onclick="checkMultiDrag()">Conferma Posizionamento</button> -->
+
+                `;             
             } else if (q.type === "dragVideo") {
                 container.innerHTML = `
                 <div class="video-container">
@@ -991,16 +1135,44 @@
             }, 1000);
         }
 
-        function allowDrop(ev) { ev.preventDefault(); }
-        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+        // Permette il drop
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        // Inizio drag, salvo id (o label) da trasferire
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        // Drop per immagini (tipo drag e drag2)
         function drop(ev) {
             ev.preventDefault();
             const data = ev.dataTransfer.getData("text");
-            const draggedImg = document.getElementById(data);
-            const dropZone = document.getElementById("drop-zone");
-            dropZone.innerHTML = '';
-            dropZone.appendChild(draggedImg.cloneNode(true));
+            const draggedElement = document.getElementById(data);
+            if (ev.target.classList.contains('drop-zone')) {
+                ev.target.appendChild(draggedElement);
+                draggedElement.style.position = "relative"; // Per sicurezza
+            }
         }
+
+        // Drag per etichette testuali (multiDrag)
+        function dragLabel(ev) {
+            ev.dataTransfer.setData("text", ev.target.dataset.label);
+        }
+
+        // Drop per etichette multiDrag
+        function dropLabel(ev) {
+            ev.preventDefault();
+            const label = ev.dataTransfer.getData("text");
+            if (ev.target.dataset.label === label) {
+                ev.target.innerHTML = label;
+                ev.target.style.backgroundColor = "lightgreen";
+            } else {
+                alert("Label errata per questa zona!");
+            }
+        }
+
 
         function renderRadarChart() {
             const ctx = document.getElementById('radar-chart').getContext('2d');
@@ -1202,7 +1374,76 @@
                     }
                 }
             });
-        }</Script>
+        }
+          let currentImageIndex = 0;
+  const imageContainers = $(".image-container");
+  const labelGroups = [$("#labels1"), $("#labels2")];
+
+  function initDragDrop() {
+    $(".draggable-label").draggable({
+      revert: "invalid",
+      containment: "document"
+    });
+
+    $(".drop-zone").droppable({
+      accept: function(draggable) {
+        return $(draggable).data("label") === $(this).data("label");
+      },
+      drop: function(event, ui) {
+        const $drag = ui.draggable;
+        const $drop = $(this);
+
+        $drag.addClass("correct");
+        $drag.position({
+          of: $drop,
+          my: "center",
+          at: "center"
+        });
+
+        $drag.draggable("disable");
+      }
+    });
+
+    $(".drop-zone").draggable({
+      containment: "parent",
+      stop: function(event, ui) {
+        const pos = ui.helper.position();
+        console.log(`Nuova posizione: top ${pos.top}px, left ${pos.left}px`);
+      }
+    });
+  }
+
+  function checkLabels() {
+    const activeContainer = imageContainers.eq(currentImageIndex);
+    const requiredLabels = activeContainer.find(".drop-zone").length;
+    const placedLabels = activeContainer.find(".drop-zone").filter(function () {
+      const labelText = $(this).data("label");
+      return $(".draggable-label.correct[data-label='" + labelText + "']").length > 0;
+    }).length;
+
+    if (placedLabels === requiredLabels) {
+      alert("Tutti corretti!");
+      activeContainer.removeClass("active");
+      labelGroups[currentImageIndex].hide();
+      currentImageIndex++;
+      if (currentImageIndex < imageContainers.length) {
+        imageContainers.eq(currentImageIndex).addClass("active");
+        labelGroups[currentImageIndex].show();
+      } else {
+        alert("Quiz completato!");
+      }
+    } else {
+      alert("Alcuni strumenti non sono nel punto giusto.");
+    }
+  }
+
+  $(document).ready(function () {
+    initDragDrop();
+  });
+
+
+
+    </Script>
 </body>
 <footer>
     <div align="center">
@@ -1211,6 +1452,8 @@
 </footer>
 
 </html>
+
+
 
 
 
