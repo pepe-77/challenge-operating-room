@@ -115,42 +115,118 @@
         .label-point:hover .tooltip {
             display: block;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 2em;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+            .modal-content input {
+                width: 100%;
+                padding: 0.8em;
+                margin: 0.5em 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
 
     <!-- Punti interattivi -->
-    <div class="label-point" style="top: 35%; left: 55%;">
-        <div class="tooltip">PINZA</div>
-    </div>
-    <div class="label-point" style="top: 78%; left: 65%;">
-        <div class="tooltip">PINZA</div>
-    </div>
-    <div class="label-point" style="top: 80%; left: 32%;">
-        <div class="tooltip">TROCAR</div>
-    </div>
-    <div class="label-point" style="top: 90%; left: 42%;">
-        <div class="tooltip">TELECAMERA</div>
-    </div>
-    <div class="label-point" style="top: 30%; left: 28%;">
-        <div class="tooltip">FORBICE</div>
-    </div>
+    <div class="label-point" style="top: 35%; left: 55%;"><div class="tooltip">PINZA</div></div>
+    <div class="label-point" style="top: 78%; left: 65%;"><div class="tooltip">PINZA</div></div>
+    <div class="label-point" style="top: 80%; left: 32%;"><div class="tooltip">TROCAR</div></div>
+    <div class="label-point" style="top: 90%; left: 42%;"><div class="tooltip">TELECAMERA</div></div>
+    <div class="label-point" style="top: 30%; left: 28%;"><div class="tooltip">FORBICE</div></div>
 
-    <!-- Login -->
+    <!-- Form di login -->
     <div class="login-container">
         <h2>Challenge Operating Room</h2>
         <input type="email" id="email" placeholder="Email" />
         <input type="password" id="password" placeholder="Password" />
         <button class="login-btn" id="btn-login">Login</button>
         <p id="login-msg"></p>
+        <p style="margin-top: 1em;">
+            Non hai un account?
+            <a href="#" id="btn-register" style="color: #2c5364; text-decoration: underline;">Registrati</a>
+        </p>
+    </div>
+
+    <!-- Modale registrazione -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3>Registrati</h3>
+            <input type="text" id="reg-name" placeholder="Nome" />
+            <input type="text" id="reg-surname" placeholder="Cognome" />
+            <input type="email" id="reg-email" placeholder="Email" />
+            <input type="password" id="reg-password" placeholder="Password" />
+            <button class="login-btn" id="btn-submit-register">Registrati</button>
+        </div>
     </div>
 
     <footer>&copy; 2025 - Healthcare Simulation</footer>
 
-    <script>const btnLogin = document.getElementById('btn-login');
-        const loginMsg = document.getElementById('login-msg');
+    <script type="module">import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        btnLogin.addEventListener('click', () => {
+        // Configurazione Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBsEp6DgveSe1dJUNAY0zXWjyCokcKrdyQ",
+            authDomain: "challenge-operating-room.firebaseapp.com",
+            projectId: "challenge-operating-room",
+            storageBucket: "challenge-operating-room.firebasestorage.app",
+            messagingSenderId: "254422148900",
+            appId: "1:254422148900:web:7db06ae37dadd0c2e335b1",
+            measurementId: "G-3FM6ZTWVHM"
+        };
+
+        // Inizializza Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Riferimenti elementi HTML
+        const btnLogin = document.getElementById('btn-login');
+        const loginMsg = document.getElementById('login-msg');
+        const btnRegister = document.getElementById('btn-register');
+        const modal = document.getElementById('registerModal');
+        const closeModal = document.getElementById('closeModal');
+        const btnSubmitRegister = document.getElementById('btn-submit-register');
+
+        // Login
+        btnLogin.addEventListener('click', async () => {
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value.trim();
             loginMsg.textContent = '';
@@ -160,8 +236,61 @@
                 return;
             }
 
-            // Simulazione login
-            window.location.href = "Mindex.html";
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // Login riuscito → vai a Mindex.html
+                window.location.href = "Mindex.html";
+            } catch (error) {
+                loginMsg.textContent = "Errore login: " + error.message;
+            }
+        });
+
+        // Apri modale registrazione
+        btnRegister.addEventListener('click', () => {
+            modal.style.display = 'block';
+        });
+
+        // Chiudi modale
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Registrazione
+        btnSubmitRegister.addEventListener('click', async () => {
+            const name = document.getElementById('reg-name').value.trim();
+            const surname = document.getElementById('reg-surname').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value.trim();
+
+            if (!name || !surname || !email || !password) {
+                alert('Compila tutti i campi per registrarti');
+                return;
+            }
+
+            try {
+                // Crea utente
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Salva dati aggiuntivi in Firestore
+                await setDoc(doc(db, "utenti", user.uid), {
+                    nome: name,
+                    cognome: surname,
+                    email: email,
+                    registratoIl: new Date()
+                });
+
+                alert('Registrazione completata con successo!');
+                modal.style.display = 'none';
+            } catch (error) {
+                alert("Errore registrazione: " + error.message);
+            }
         });</script>
 
 </body>
