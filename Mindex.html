@@ -272,13 +272,18 @@
             }
 
         footer {
-            position: absolute; /* Posiziona il footer rispetto al suo antenato posizionato (il body) */
-            bottom: 0; /* Lo fissa al fondo del body */
-            width: 100%; /* Lo fa estendere per tutta la larghezza */
-            background-color: #6ba98f; /* Un colore di sfondo leggero per farlo risaltare */
-            padding: 10px 0; /* Un po' di spazio sopra e sotto il testo */
-            text-align: center; /* Allinea il testo al centro */
+            position: absolute;
+            bottom: -20px; /* Sposta il footer 20px più in basso */
+            width: 100%;
+            background-color: #6ba98f;
+            padding: 10px 0;
+            text-align: center;
         }
+
+            footer.hidden {
+                display: none;
+            }
+
 
         #anagrafica-content {
             width: 100%;
@@ -564,6 +569,46 @@
     pointer-events: none;
     user-select: none;
   }
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap; /* permette l’adattamento sui piccoli schermi */
+            justify-content: center;
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto 50px auto;
+            padding: 20px;
+        }
+
+        .dashboard-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex: 1 1 calc(33.33% - 30px); /* 3 colonne con gap incluso */
+            min-width: 300px;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+            .dashboard-card h3 {
+                margin-top: 0;
+                color: #6ba98f;
+                text-align: center;
+            }
+
+        #radar-chart {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Mobile Responsive */
+        @media screen and (max-width: 1000px) {
+            .dashboard-card {
+                flex: 1 1 100%; /* ogni card occupa tutta la larghezza */
+                max-width: 100%;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -665,24 +710,38 @@
         </div>
     </div>
 
-    
+
+    <!-- Dashboard Risultati -->
     <div id="results-container" class="hidden">
-        <h2>Risultati Challenge</h2>
+        <h2 style="text-align: center; margin-bottom: 30px;">Risultati Challenge</h2>
 
-        <!-- Dati anagrafici dell'utente -->
-        <div id="datiAnagraficiDiv"></div>
+        <div class="dashboard">
+            <!-- Card Anagrafica -->
+            <div class="dashboard-card">
+                <h3>Anagrafica</h3>
+                <div id="datiAnagraficiDiv"></div>
+            </div>
 
-        <!-- Riepilogo punteggio e radar chart -->
-        <canvas id="radar-chart" width="400" height="400"></canvas>
-        <div id="riepilogoUtenteQuiz"></div>
+            <!-- Card Radar Chart -->
+            <div class="dashboard-card">
+                <h3>Radar delle Competenze</h3>
+                <canvas id="radar-chart" width="400" height="400"></canvas>
+                <div id="riepilogoUtenteQuiz"></div>
+            </div>
 
-        <!-- Dettagli delle risposte -->
-        <div id="results-details"></div>
+            <!-- Card Risposte Dettagliate -->
+            <div class="dashboard-card full-width">
+                <h3>Dettaglio Risposte</h3>
+                <div id="results-details"></div>
+            </div>
+        </div>
 
-        <!-- Bottoni di azione -->
-        <button onclick="restartQuiz()">Ricomincia</button>
-        <button onclick="endQuiz()">Termina Prova</button>
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="restartQuiz()">🔄 Ricomincia</button>
+            <button onclick="endQuiz()">✅ Termina Prova</button>
+        </div>
     </div>
+
 
 
     <!-- Audio -->
@@ -902,25 +961,25 @@
             },
 
         ];
-    function showFinalSummary() {
-    if (!userData) return console.error("userData non definito");
+        function showFinalSummary() {
+            if (!userData) return console.error("userData non definito");
 
-    const userInfo = `
-        <strong>Nome:</strong> ${userData.nome}<br>
-        <strong>Cognome:</strong> ${userData.cognome}<br>
-        <strong>Professione:</strong> ${userData.professione}<br>
-        <strong>Anni di servizio:</strong> ${userData.anniServizio}<br>
-        <strong>Email:</strong> ${userData.email}
-    `;
+            const userInfo = `
+                <strong>Nome:</strong> ${userData.nome}<br>
+                <strong>Cognome:</strong> ${userData.cognome}<br>
+                <strong>Professione:</strong> ${userData.professione}<br>
+                <strong>Anni di servizio:</strong> ${userData.anniServizio}<br>
+                <strong>Email:</strong> ${userData.email}
+            `;
 
-    const infoDiv = document.getElementById('user-info');
-    if (infoDiv) infoDiv.innerHTML = userInfo;
+            const infoDiv = document.getElementById('user-info');
+            if (infoDiv) infoDiv.innerHTML = userInfo;
 
-    document.getElementById("quiz-container")?.classList.add("hidden");
-    document.getElementById("final-summary")?.classList.remove("hidden");
+            document.getElementById("quiz-container")?.classList.add("hidden");
+            document.getElementById("final-summary")?.classList.remove("hidden");
 
-    showRadarChart();
-}
+            showRadarChart();
+        }
 
         function startChallenge() {
             document.getElementById("intro-container").classList.remove("show");
@@ -963,82 +1022,82 @@
 
             if (q.type === "checkbox") {
                 container.innerHTML = `
-                        <div class="question-image-options-container">
-                            <div id="image-container"><img src="${q.image}" /></div>
-                            <form id="options-form">
-                                ${q.options.map(opt => `<label><input type="checkbox" name="option" value="${opt}"> ${opt}</label><br>`).join('')}
-                            </form>
-                        </div>`;
+                                <div class="question-image-options-container">
+                                    <div id="image-container"><img src="${q.image}" /></div>
+                                    <form id="options-form">
+                                        ${q.options.map(opt => `<label><input type="checkbox" name="option" value="${opt}"> ${opt}</label><br>`).join('')}
+                                    </form>
+                                </div>`;
             } else if (q.type === "drag") {
                 container.innerHTML = `
-                        <div class="drag-container">
-                            <div class="question-area">
-                                <img src="${q.image}" class="main-image" />
-                                <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                            </div>
-                            <div class="options">
-                                <img src="Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                                <img src="lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                                <img src="Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
-                            </div>
-                        </div>`;
+                                <div class="drag-container">
+                                    <div class="question-area">
+                                        <img src="${q.image}" class="main-image" />
+                                        <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                    </div>
+                                    <div class="options">
+                                        <img src="Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                                        <img src="lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                                        <img src="Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                                    </div>
+                                </div>`;
             } else if (q.type === "drag2") {
                 container.innerHTML = `
-                        <div class="drag-container">
-                            <div class="question-area">
-                                <img src="${q.image}" class="main-image" />
-                                <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                            </div>
-                            <div class="options">
-                                <img src="Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama3" />
-                                <img src="Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                                <img src="Faco.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                            </div>
-                        </div>`;
+                                <div class="drag-container">
+                                    <div class="question-area">
+                                        <img src="${q.image}" class="main-image" />
+                                        <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                    </div>
+                                    <div class="options">
+                                        <img src="Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                                        <img src="Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                                        <img src="Faco.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                                    </div>
+                                </div>`;
             } else if (q.type === "multiDrag") {
                 let imageHtml = `<div class="image-container" id="image-multi" style="position: relative;">`;
                 imageHtml += `<img src="${q.image}" alt="Immagine" style="width: 50%;" />`;
                 q.dropZones.forEach(dz => {
                     imageHtml += `<div class="drop-zone" data-label="${dz.label}"
-                                ondrop="dropLabel(event)"
-                                ondragover="allowDrop(event)"
-                                style="position: absolute; top: ${dz.top}px; left: ${dz.left}px;">
-                                ?
-                            </div>`;
+                                        ondrop="dropLabel(event)"
+                                        ondragover="allowDrop(event)"
+                                        style="position: absolute; top: ${dz.top}px; left: ${dz.left}px;">
+                                        ?
+                                    </div>`;
                 });
                 imageHtml += `</div>`;
 
                 let labelsHtml = `<div class="label-list">`;
                 q.labels.forEach(label => {
                     labelsHtml += `<div class="draggable-label"
-                                draggable="true"
-                                ondragstart="dragLabel(event)"
-                                data-label="${label}"
-                                style="margin: 5px; padding: 5px; background-color: lightgray; cursor: grab;">
-                                ${label}
-                            </div>`;
+                                        draggable="true"
+                                        ondragstart="dragLabel(event)"
+                                        data-label="${label}"
+                                        style="margin: 5px; padding: 5px; background-color: lightgray; cursor: grab;">
+                                        ${label}
+                                    </div>`;
                 });
                 labelsHtml += `</div>`;
 
                 container.innerHTML = `
-                            <h2></h2>
-                            ${imageHtml}
-                            ${labelsHtml}
-                            <!-- <button class="check-btn" onclick="checkMultiDrag()">Conferma Posizionamento</button> -->
+                                    <h2></h2>
+                                    ${imageHtml}
+                                    ${labelsHtml}
+                                    <!-- <button class="check-btn" onclick="checkMultiDrag()">Conferma Posizionamento</button> -->
 
-                        `;
+                                `;
             } else if (q.type === "dragVideo") {
                 container.innerHTML = `
-                        <div class="video-container">
-                            <video id="myVideo" controls>
-                                <source src="${q.videoSrc}" type="video/mp4" />
-                                Il tuo browser non supporta il video.
-                            </video>
-                            <div id="dropZone" class="drop-zone-video" ondrop="handleVideoDrop(event, '${q.correctId}')" ondragover="allowDrop(event)"></div>
-                        </div>
-                        <div class="options video-options">
-                            ${q.options.map(opt => `<img src="${opt.src}" id="${opt.id}" draggable="true" ondragstart="drag(event)" />`).join('')}
-                        </div>`;
+                                <div class="video-container">
+                                    <video id="myVideo" controls>
+                                        <source src="${q.videoSrc}" type="video/mp4" />
+                                        Il tuo browser non supporta il video.
+                                    </video>
+                                    <div id="dropZone" class="drop-zone-video" ondrop="handleVideoDrop(event, '${q.correctId}')" ondragover="allowDrop(event)"></div>
+                                </div>
+                                <div class="options video-options">
+                                    ${q.options.map(opt => `<img src="${opt.src}" id="${opt.id}" draggable="true" ondragstart="drag(event)" />`).join('')}
+                                </div>`;
 
                 const video = document.getElementById("myVideo");
                 const dropZone = document.getElementById("dropZone");
@@ -1136,11 +1195,12 @@
             if (currentQuestion < questions.length) {
                 loadQuestion();
             } else {
-                document.getElementById("quiz-container").classList.remove("show");
-                document.getElementById("quiz-container").classList.add("hidden");
+                document.getElementById("quiz-container").classList.replace("show", "hidden");
+                document.getElementById("results-container").classList.replace("hidden", "show");
 
-                document.getElementById("results-container").classList.remove("hidden");
-                document.getElementById("results-container").classList.add("show");
+                // Nascondi il footer
+                document.querySelector("footer").classList.add("hidden");
+
                 renderRadarChart();
             }
         }
@@ -1210,41 +1270,41 @@
 
             // Dati anagrafici
             document.getElementById('datiAnagraficiDiv').innerHTML = `
-            <h3>Dati Anagrafici Inseriti:</h3>
-            <p><strong>Nome:</strong> ${userData.nome || 'N/A'}</p>
-            <p><strong>Cognome:</strong> ${userData.cognome || 'N/A'}</p>
-            <p><strong>Professione:</strong> ${userData.professione || 'N/A'}</p>
-            <p><strong>Anni di Servizio:</strong> ${userData.anniServizio || 'N/A'}</p>
-            <p><strong>Email:</strong> ${userData.email || 'N/A'}</p>
-        `;
+                    <h3>Dati Anagrafici Inseriti:</h3>
+                    <p><strong>Nome:</strong> ${userData.nome || 'N/A'}</p>
+                    <p><strong>Cognome:</strong> ${userData.cognome || 'N/A'}</p>
+                    <p><strong>Professione:</strong> ${userData.professione || 'N/A'}</p>
+                    <p><strong>Anni di Servizio:</strong> ${userData.anniServizio || 'N/A'}</p>
+                    <p><strong>Email:</strong> ${userData.email || 'N/A'}</p>
+                `;
 
             // Riepilogo sintetico
             document.getElementById('riepilogoUtenteQuiz').innerHTML = `
-            <p>Il/La Sig. <strong>${userData.nome || ''} ${userData.cognome || ''}</strong>,
-            con <strong>${userData.anniServizio || 'N/A'}</strong> anni di servizio,
-            ha risposto correttamente a <strong>${correctAnswers} domande su ${totalQuestions}</strong>.</p>
-            <hr>
-        `;
+                    <p>Il/La Sig. <strong>${userData.nome || ''} ${userData.cognome || ''}</strong>,
+                    con <strong>${userData.anniServizio || 'N/A'}</strong> anni di servizio,
+                    ha risposto correttamente a <strong>${correctAnswers} domande su ${totalQuestions}</strong>.</p>
+                    <hr>
+                `;
 
             // Riepilogo dettagliato
             const detailedResultsHtml = `
-            <h3>Riepilogo Quiz:</h3>
-            <p><strong>Risposte corrette:</strong> ${correctAnswers} / ${totalQuestions}</p>
-            <p><strong>Risposte sbagliate:</strong> ${wrongAnswers}</p>
-            <p><strong>Punteggio totale:</strong> ${score} / ${totalQuestions * 10}</p>
-            <p><strong>Livello competenze:</strong> ${skillLevel}</p>
-            <hr>
-            <h3>Dettaglio Risposte:</h3>
-            <ul>
-                ${questionResults.map((res, i) => `
-                    <li><strong>Domanda ${i + 1}:</strong> ${res.questionTitle} –
-                    ${res.correct ? '<span style="color:green;">Corretta</span>' : '<span style="color:red;">Sbagliata</span>'}
-                    ${res.userAnswer ? `(Tua risposta: ${res.userAnswer})` : ''}
-                    ${!res.correct && res.correctAnswer ? `(Corretta: ${Array.isArray(res.correctAnswer) ? res.correctAnswer.join(', ') : res.correctAnswer})` : ''}
-                    </li>
-                `).join('')}
-            </ul>
-        `;
+                    <h3>Riepilogo Quiz:</h3>
+                    <p><strong>Risposte corrette:</strong> ${correctAnswers} / ${totalQuestions}</p>
+                    <p><strong>Risposte sbagliate:</strong> ${wrongAnswers}</p>
+                    <p><strong>Punteggio totale:</strong> ${score} / ${totalQuestions * 10}</p>
+                    <p><strong>Livello competenze:</strong> ${skillLevel}</p>
+                    <hr>
+                    <h3>Dettaglio Risposte:</h3>
+                    <ul>
+                        ${questionResults.map((res, i) => `
+                            <li><strong>Domanda ${i + 1}:</strong> ${res.questionTitle} –
+                            ${res.correct ? '<span style="color:green;">Corretta</span>' : '<span style="color:red;">Sbagliata</span>'}
+                            ${res.userAnswer ? `(Tua risposta: ${res.userAnswer})` : ''}
+                            ${!res.correct && res.correctAnswer ? `(Corretta: ${Array.isArray(res.correctAnswer) ? res.correctAnswer.join(', ') : res.correctAnswer})` : ''}
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
             document.getElementById('results-details').innerHTML = detailedResultsHtml;
 
             // Radar chart finale
@@ -1291,17 +1351,17 @@
             const totalQuestionsCount = questions.length;
 
             datiAnagraficiDiv.innerHTML = `
-            <h3>Dati Anagrafici Inseriti:</h3>
-            <p><strong>Nome:</strong> ${userData.nome || 'N/A'}</p>
-            <p><strong>Cognome:</strong> ${userData.cognome || 'N/A'}</p>
-            <p><strong>Professione:</strong> ${userData.professione || 'N/A'}</p>
-            <p><strong>Anni di Servizio:</strong> ${userData.anniServizio || 'N/A'}</p>
-            <p><strong>Email:</strong> ${userData.email || 'N/A'}</p>
-            <hr>
-            <p>Il/La Sig. <strong>${userData.nome || ''} ${userData.cognome || ''}</strong>
-            ha risposto correttamente a <strong>${correctAnswersCount} domande su ${totalQuestionsCount}</strong>.</p>
-            <p>Punteggio totale: <strong>${score} / ${questions.length * 10}</strong></p>
-        `;
+                    <h3>Dati Anagrafici Inseriti:</h3>
+                    <p><strong>Nome:</strong> ${userData.nome || 'N/A'}</p>
+                    <p><strong>Cognome:</strong> ${userData.cognome || 'N/A'}</p>
+                    <p><strong>Professione:</strong> ${userData.professione || 'N/A'}</p>
+                    <p><strong>Anni di Servizio:</strong> ${userData.anniServizio || 'N/A'}</p>
+                    <p><strong>Email:</strong> ${userData.email || 'N/A'}</p>
+                    <hr>
+                    <p>Il/La Sig. <strong>${userData.nome || ''} ${userData.cognome || ''}</strong>
+                    ha risposto correttamente a <strong>${correctAnswersCount} domande su ${totalQuestionsCount}</strong>.</p>
+                    <p>Punteggio totale: <strong>${score} / ${questions.length * 10}</strong></p>
+                `;
 
             // Radar 1: correttezza per domanda
             const radarData = questionResults.map(q => q.correct ? 100 : 0);
@@ -1415,7 +1475,99 @@
                     console.log(`Nuova posizione: top ${pos.top}px, left ${pos.left}px`);
                 }
             });
+        }
+        function endQuiz() {
+            const data = {
+                nome: userData.nome,
+                cognome: userData.cognome,
+                punteggio: punteggioTotale,
+                dataCompletamento: new Date().toISOString()
+            };
+
+            fetch("salva.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.text())
+                .then(msg => {
+                    alert("Dati salvati: " + msg);
+                    // eventualmente puoi fare redirect
+                    // window.location.href = "risultati.php";
+                })
+                .catch(err => console.error("Errore:", err));
         }</Script>
+    <script>const userData = {
+            nome: "Mario",
+            cognome: "Rossi",
+            professione: "Infermiere",
+            anniServizio: "10",
+            email: "mario.rossi@example.com"
+        };
+        const score = 160;
+        const questions = new Array(20).fill(0);
+        const questionResults = Array.from({ length: 20 }, (_, i) => ({
+            questionTitle: `Domanda ${i + 1}`,
+            correct: i % 2 === 0,
+            userAnswer: i % 2 === 0 ? "Risposta Corretta" : "Risposta Errata",
+            correctAnswer: "Risposta Corretta"
+        }));
+        document.getElementById('datiAnagraficiDiv').innerHTML = `
+                <p><strong>Nome:</strong> ${userData.nome}</p>
+                <p><strong>Cognome:</strong> ${userData.cognome}</p>
+                <p><strong>Professione:</strong> ${userData.professione}</p>
+                <p><strong>Anni di Servizio:</strong> ${userData.anniServizio}</p>
+                <p><strong>Email:</strong> ${userData.email}</p>
+            `;
+        document.getElementById('riepilogoUtenteQuiz').innerHTML = `
+                <p>Hai risposto correttamente a <strong>${score / 10} domande su ${questions.length}</strong>.</p>
+                <p>Punteggio totale: <strong>${score} / ${questions.length * 10}</strong></p>
+            `;
+        document.getElementById('results-details').innerHTML = `
+                <ul>
+                    ${questionResults.map((res, i) => `
+                        <li><strong>Domanda ${i + 1}:</strong> ${res.questionTitle} –
+                        ${res.correct ? '<span style="color:green;">Corretta</span>' : '<span style="color:red;">Sbagliata</span>'}
+                        ${res.userAnswer ? `(Tua risposta: ${res.userAnswer})` : ''}
+                        ${!res.correct && res.correctAnswer ? `(Corretta: ${res.correctAnswer})` : ''}</li>
+                    `).join('')}
+                </ul>
+            `;
+        new Chart(document.getElementById('radar-chart').getContext('2d'), {
+            type: 'radar',
+            data: {
+                labels: ['Correttezza', 'Velocità', 'Conoscenza', 'Precisione', 'Risposte Corrette', 'Risposte Sbagliate'],
+                datasets: [{
+                    label: 'Prestazioni',
+                    data: [80, 0.5, 80, 80, score / 10, questions.length - score / 10],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { labels: { font: { size: 14 } } },
+                    title: { display: true, text: 'Radar delle Competenze', font: { size: 18 } }
+                },
+                scales: {
+                    r: {
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        pointLabels: { font: { size: 12 } },
+                        ticks: { beginAtZero: true }
+                    }
+                }
+            }
+        });
+        function restartQuiz() {
+            alert("Funzione restart in sviluppo");
+        }
+        function endQuiz() {
+            alert("Funzione salvataggio quiz in sviluppo");
+        }</script>
 </body>
 <footer>
     <div align="center">
@@ -1424,9 +1576,4 @@
 </footer>
 
 </html>
-
-
-
-
-
 
