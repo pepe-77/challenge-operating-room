@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <title>Risultati Quiz</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>🩺 Riepilogo Utente</h1>
+    <div id="anagrafica"></div>
+    <h2>📋 Risposte</h2>
+    <table id="risposte">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Domanda</th>
+                <th>Tua risposta</th>
+                <th>Esito</th>
+                <th>Risposta corretta</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>// Recupera i dati dal localStorage
+    const dati = JSON.parse(localStorage.getItem("quizRisultati"));
+
+    if (dati) {
+      document.getElementById("anagrafica").innerHTML = `
+        <p><strong>Nome:</strong> ${dati.nome}</p>
+        <p><strong>Cognome:</strong> ${dati.cognome}</p>
+        <p><strong>Professione:</strong> ${dati.professione}</p>
+        <p><strong>Anni di Servizio:</strong> ${dati.anniServizio}</p>
+        <p><strong>Email:</strong> ${dati.email}</p>
+        <p><strong>Punteggio:</strong> ${dati.punteggio}</p>
+      `;
+
+      const tbody = document.querySelector("#risposte tbody");
+      dati.risposte.forEach((r, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${r.questionTitle}</td>
+          <td>${r.userAnswer || "N/D"}</td>
+          <td style="color: ${r.correct ? 'green' : 'red'}">${r.correct ? "✔️" : "❌"}</td>
+          <td>${Array.isArray(r.correctAnswer) ? r.correctAnswer.join(", ") : r.correctAnswer}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    } else {
+      document.body.innerHTML += "<p style='color:red;'>Nessun dato trovato. Fai prima il quiz.</p>";
+    }</script>
+</body>
+</html>
