@@ -2,8 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8" />
-    <title>Risultati Quiz</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Riepilogo Tutti i Risultati Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,14 +35,16 @@
         .rosso {
             color: red;
         }
+
+        .utente-riga {
+            background: #ddd;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h1>🩺 Riepilogo Utente</h1>
-    <div id="anagrafica"></div>
-
-    <h2>📋 Risposte</h2>
-    <table id="risposte">
+    <h1>🩺 Riepilogo Tutti gli Utenti</h1>
+    <table id="risultati">
         <thead>
             <tr>
                 <th>#</th>
@@ -56,42 +57,44 @@
         <tbody></tbody>
     </table>
 
-    <script>// Recupera i dati dal localStorage
-        const dati = JSON.parse(localStorage.getItem("quizRisultati"));
+    <script>// Leggi l'array di risultati dal localStorage
+        const datiArray = JSON.parse(localStorage.getItem("quizRisultatiArray")) || [];
 
-        if (dati) {
-            const corrette = dati.risposteCorrette || dati.risposte.filter(r => r.correct).length;
-            const totale = dati.risposte.length;
+        const tbody = document.querySelector("#risultati tbody");
 
-            document.getElementById("anagrafica").innerHTML = `
-                    <p><strong>Nome:</strong> ${dati.nome}</p>
-                    <p><strong>Cognome:</strong> ${dati.cognome}</p>
-                    <p><strong>Professione:</strong> ${dati.professione}</p>
-                    <p><strong>Anni di Servizio:</strong> ${dati.anniServizio}</p>
-                    <p><strong>Email:</strong> ${dati.email}</p>
-                    <p><strong>Punteggio:</strong> ${dati.punteggio}</p>
-                    <p><strong>Risposte corrette:</strong> ${corrette} su ${totale}</p>
-                `;
+        if (datiArray.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="color:red;">Nessun dato trovato. Fai prima il quiz.</td></tr>';
+        } else {
+            datiArray.forEach((dati, utenteIdx) => {
+                const corrette = dati.risposte.filter(r => r.correct).length;
+                const totale = dati.risposte.length;
 
-            const tbody = document.querySelector("#risposte tbody");
-            dati.risposte.forEach((r, i) => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
+                // Riga intestazione utente
+                const trUtente = document.createElement("tr");
+                trUtente.classList.add("utente-riga");
+                trUtente.innerHTML = `<td colspan="5">
+                    Utente #${utenteIdx + 1}: ${dati.nome} ${dati.cognome} | Professione: ${dati.professione} | Anni servizio: ${dati.anniServizio} | Email: ${dati.email} | Punteggio: ${dati.punteggio} | Corrette: ${corrette} / ${totale}
+                </td>`;
+                tbody.appendChild(trUtente);
+
+                // Riga singole risposte
+                dati.risposte.forEach((r, i) => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
                         <td>${i + 1}</td>
                         <td>${r.questionTitle || "Domanda non disponibile"}</td>
                         <td>${r.userAnswer || "N/D"}</td>
                         <td class="${r.correct ? 'verde' : 'rosso'}">${r.correct ? "✔️" : "❌"}</td>
                         <td>${Array.isArray(r.correctAnswer) ? r.correctAnswer.join(", ") : r.correctAnswer}</td>
                     `;
-                tbody.appendChild(tr);
+                    tbody.appendChild(tr);
+                });
+
+                // Riga vuota separatore
+                const trSpacer = document.createElement("tr");
+                trSpacer.innerHTML = '<td colspan="5">&nbsp;</td>';
+                tbody.appendChild(trSpacer);
             });
-        } else {
-            document.body.innerHTML += "<p style='color:red;'>Nessun dato trovato. Fai prima il quiz.</p>";
-        }
-    </script>
-    <script>
-  // scarica automaticamente dopo il caricamento
-  setTimeout(() => scaricaPDF(), 1500);
-</script>
+        }</script>
 </body>
 </html>
