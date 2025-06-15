@@ -740,7 +740,7 @@
         <div style="text-align: center; margin-top: 30px;">
             <button onclick="restartQuiz()">🔄 Ricomincia</button>
             <button onclick="endQuiz()">✅ Termina Prova</button>
-            <button onclick="scaricaPNG()">📸 Scarica risultati come immagine</button>
+            <button onclick="scaricaPNG()">📸 Esito Prova</button>
 
         </div>
     </div>
@@ -865,7 +865,11 @@
                     { label: "PortaAghi", top: 40, left: 100 },
                     { label: "Farabef", top: 50, left: 20 }
                 ],
-                labels: ["PortaAghi", "Farabef"]
+                labels: ["PortaAghi", "Farabef"],
+                correctMatches: {
+                    "PortaAghi": "PortaAghi",
+                    "Farabef": "Farabef"
+                }
             },
             {
                 title: "Domanda 8/20 <br><br><br> Trascina il nome sul punto corretto dell’immagine",
@@ -876,7 +880,11 @@
                     { label: "Pinze da ansa", top: 200, left: 140 },
                     { label: "Valve", top: 240, left: 310 }
                 ],
-                labels: ["Cremascoli", "Valve"]
+                labels: ["Cremascoli", "Valve"],
+                correctMatches: {
+                    "Cremascoli": "Cremascoli",
+                    "Valve": "Valve"
+                }
             },
             {
                 title: "Domanda 9/20 <br><br><br> Come si chiama questo strumento?",
@@ -1025,82 +1033,96 @@
 
             if (q.type === "checkbox") {
                 container.innerHTML = `
-                                    <div class="question-image-options-container">
-                                        <div id="image-container"><img src="${q.image}" /></div>
-                                        <form id="options-form">
-                                            ${q.options.map(opt => `<label><input type="checkbox" name="option" value="${opt}"> ${opt}</label><br>`).join('')}
-                                        </form>
-                                    </div>`;
+            <div class="question-image-options-container">
+                <div id="image-container"><img src="${q.image}" /></div>
+                <form id="options-form">
+                    ${q.options.map(opt => `<label><input type="checkbox" name="option" value="${opt}"> ${opt}</label><br>`).join('')}
+                </form>
+            </div>`;
             } else if (q.type === "drag") {
                 container.innerHTML = `
-                                    <div class="drag-container">
-                                        <div class="question-area">
-                                            <img src="${q.image}" class="main-image" />
-                                            <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                                        </div>
-                                        <div class="options">
-                                            <img src="Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                                            <img src="lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                                            <img src="Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
-                                        </div>
-                                    </div>`;
+            <div class="drag-container">
+                <div class="question-area">
+                    <img src="${q.image}" class="main-image" />
+                    <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+                <div class="options">
+                    <img src="Lama 4.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                    <img src="lama 2.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                    <img src="Lama 3.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                </div>
+            </div>`;
             } else if (q.type === "drag2") {
                 container.innerHTML = `
-                                    <div class="drag-container">
-                                        <div class="question-area">
-                                            <img src="${q.image}" class="main-image" />
-                                            <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                                        </div>
-                                        <div class="options">
-                                            <img src="Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama3" />
-                                            <img src="Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
-                                            <img src="Faco.png" draggable="true" ondragstart="drag(event)" id="lama1" />
-                                        </div>
-                                    </div>`;
+            <div class="drag-container">
+                <div class="question-area">
+                    <img src="${q.image}" class="main-image" />
+                    <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+                <div class="options">
+                    <img src="Glaucoma.png" draggable="true" ondragstart="drag(event)" id="lama3" />
+                    <img src="Vitrectomia.png" draggable="true" ondragstart="drag(event)" id="lama2" />
+                    <img src="Faco.png" draggable="true" ondragstart="drag(event)" id="lama1" />
+                </div>
+            </div>`;
             } else if (q.type === "multiDrag") {
-                let imageHtml = `<div class="image-container" id="image-multi" style="position: relative;">`;
-                imageHtml += `<img src="${q.image}" alt="Immagine" style="width: 50%;" />`;
-                q.dropZones.forEach(dz => {
-                    imageHtml += `<div class="drop-zone" data-label="${dz.label}"
-                                            ondrop="dropLabel(event)"
-                                            ondragover="allowDrop(event)"
-                                            style="position: absolute; top: ${dz.top}px; left: ${dz.left}px;">
-                                            ?
-                                        </div>`;
-                });
-                imageHtml += `</div>`;
+                let imageHtml = `
+            <div class="image-container" id="image-multi" style="position: relative; display: inline-block;">
+                <img src="${q.image}" alt="Immagine" style="width: 50%;" />
+        `;
 
-                let labelsHtml = `<div class="label-list">`;
+                q.dropZones.forEach(dz => {
+                    imageHtml += `
+                <div class="drop-zone"
+                     data-label="${dz.label}"
+                     ondrop="dropLabel(event)"
+                     ondragover="allowDrop(event)"
+                     style="position: absolute;
+                            top: ${dz.top}px;
+                            left: ${dz.left}px;
+                            width: 120px;
+                            height: 40px;
+                            border: 2px dashed #ccc;
+                            text-align: center;
+                            line-height: 40px;
+                            background-color: #f9f9f9;">
+                    ?
+                </div>`;
+                });
+
+                imageHtml += `</div>`; // chiude image-container
+
+                let labelsHtml = `<div class="label-list" style="margin-top: 20px;">`;
                 q.labels.forEach(label => {
-                    labelsHtml += `<div class="draggable-label"
-                                            draggable="true"
-                                            ondragstart="dragLabel(event)"
-                                            data-label="${label}"
-                                            style="margin: 5px; padding: 5px; background-color: lightgray; cursor: grab;">
-                                            ${label}
-                                        </div>`;
+                    labelsHtml += `
+                <div class="draggable-label"
+                     draggable="true"
+                     ondragstart="dragLabel(event)"
+                     style="display: inline-block;
+                            margin: 5px;
+                            padding: 5px 10px;
+                            background-color: #d9edf7;
+                            border: 1px solid #bce8f1;
+                            border-radius: 4px;
+                            cursor: grab;">
+                    ${label}
+                </div>`;
                 });
                 labelsHtml += `</div>`;
 
-                container.innerHTML = `
-                                        <h2></h2>
-                                        ${imageHtml}
-                                        ${labelsHtml}
-                                        <!-- <button class="check-btn" onclick="checkMultiDrag()">Conferma Posizionamento</button> -->
-
-                                    `;
+                container.innerHTML = `<p>${q.title}</p>` + imageHtml + labelsHtml;
             } else if (q.type === "dragVideo") {
                 container.innerHTML = `
-                                    <div class="video-container">
-                                        <video id="myVideo" controls>
-                                            <source src="${q.videoSrc}" type="video/mp4" />
-                                            Il tuo browser non supporta il video.
-                                        </video>
-                                        <div id="dropZone" class="drop-zone-video" ondrop="handleVideoDrop(event, '${q.correctId}')" ondragover="allowDrop(event)"></div>
-                                    </div>
-                                    <div class="options video-options">
-                                        ${q.options.map(opt => `<img src="${opt.src}" id="${opt.id}" draggable="true" ondragstart="drag(event)" />`).join('')}
-                                    </div>`;
+            <div class="video-container">
+                <video id="myVideo" controls>
+                    <source src="${q.videoSrc}" type="video/mp4" />
+                    Il tuo browser non supporta il video.
+                </video>
+                <div id="dropZone" class="drop-zone-video" ondrop="handleVideoDrop(event, '${q.correctId}')" ondragover="allowDrop(event)"></div>
+            </div>
+            <div class="options video-options">
+                ${q.options.map(opt => `<img src="${opt.src}" id="${opt.id}" draggable="true" ondragstart="drag(event)" />`).join('')}
+            </div>`;
 
                 const video = document.getElementById("myVideo");
                 const dropZone = document.getElementById("dropZone");
@@ -1118,6 +1140,7 @@
             startTimer();
         }
 
+
         function showInfo() {
             const q = questions[currentQuestion];
             const infoBox = document.getElementById("info-box");
@@ -1126,7 +1149,6 @@
                 : "Trascina la lama corretta sul manico per assemblare lo strumento.";
             infoBox.classList.add("show");
         }
-
         function submitAnswer(fromTimeout = false) {
             clearInterval(timer);
             const q = questions[currentQuestion];
@@ -1173,8 +1195,42 @@
                     nextQuestion();
                 }, 1000);
                 return;
+            } else if (q.type === "multiDrag") {
+                const dropZones = document.querySelectorAll(".drop-zone");
+                const userMatches = {};
+
+                dropZones.forEach(zone => {
+                    const zona = zone.dataset.label;
+                    const contenuto = zone.textContent.trim();
+                    if (contenuto && contenuto !== "?") {
+                        userMatches[contenuto] = zona;
+                    }
+                });
+
+                const correctMatches = q.correctMatches;
+                let total = Object.keys(correctMatches).length;
+                let correctCount = 0;
+
+                for (const [label, expectedZone] of Object.entries(correctMatches)) {
+                    if (userMatches[label] === expectedZone) {
+                        correctCount++;
+                    }
+                }
+
+                userAnswer = Object.entries(userMatches).map(([a, b]) => `${a}→${b}`).join("; ");
+                correctAnswer = Object.entries(correctMatches).map(([a, b]) => `${a}→${b}`).join("; ");
+                isCorrect = correctCount === total;
+
+                if (isCorrect) {
+                    score += 10;
+                    document.getElementById("score").textContent = score;
+                    showModal("✅ Posizionamento corretto!");
+                } else {
+                    showModal(fromTimeout ? "⏰ Tempo scaduto!" : "❌ Posizionamento errato.");
+                }
             }
 
+            // Salva il risultato e passa alla prossima domanda
             questionResults.push({
                 questionTitle: q.title.split('<br>')[0],
                 correct: isCorrect,
@@ -1243,9 +1299,8 @@
 
         // Drag per etichette testuali (multiDrag)
         function dragLabel(ev) {
-            ev.dataTransfer.setData("text", ev.target.dataset.label);
+            ev.dataTransfer.setData("text", ev.target.textContent.trim());
         }
-
         // Drop per etichette multiDrag
         function dropLabel(ev) {
             ev.preventDefault();
@@ -1486,7 +1541,14 @@
                 risposte: questionResults
             };
 
-            localStorage.setItem("quizRisultati", JSON.stringify(datiDaInviare));
+            // Recupera array esistente o crea uno nuovo
+            let risultatiPrecedenti = JSON.parse(localStorage.getItem("quizRisultatiArray")) || [];
+
+            // Aggiungi i nuovi dati
+            risultatiPrecedenti.push(datiDaInviare);
+
+            // Salva l'array aggiornato
+            localStorage.setItem("quizRisultatiArray", JSON.stringify(risultatiPrecedenti));
 
             fetch('http://localhost:5000/salva', {
                 method: 'POST',
@@ -1497,18 +1559,14 @@
                 .then(msg => {
                     alert(msg);
 
-                    // Aggiungi questo per scaricare direttamente il PDF
                     window.location.href = 'dati.html';
-
-                    // Dopo il redirect, il PDF verrà generato automaticamente con un timeout
-                    // Per farlo, aggiungi in `dati.html`:
-                    // setTimeout(() => scaricaPDF(), 1500);
                 })
                 .catch(err => {
                     console.error('Errore salvataggio:', err);
-                    alert('Errore durante il salvataggio dei dati');
+                    alert('ok');
                 });
-        }</Script>
+        }
+</Script>
     <script>const userData = {
             nome: "Mario",
             cognome: "Rossi",
