@@ -687,7 +687,7 @@
     <div id="quiz-container" class="hidden">
         <div class="top-bar">
             <div>Punti: <span id="score">0</span></div>
-            <div>Tempo rimasto: <span id="timer">600</span>s</div>
+            <div>Tempo rimasto: <span id="timer">300</span>s</div>
         </div>
         <div align="right">
             <h2 id="question-title">
@@ -809,7 +809,7 @@
         let currentQuestion = 0;
         let score = 0;
         let timer;
-        let timeLeft = 600;
+        let timeLeft = 120;
         let userData = {};
         let questionResults = []; // Array per salvare i risultati di ogni domanda
 
@@ -822,11 +822,11 @@
         correctAnswers: ["Pinza da emostasi"]
         },
         {
-        title: "Domanda 2/20 <br><br><br> Come si chiama questo strumento?",
+        title: "Domanda 2/20 <br><br><br> Riconosci questo questo strumento? Si tratta di:",
         type: "checkbox",
-        image: "pinza-da-presa.jpg",
-        options: ["kocher rette", "Rochester", "Heiss rette"],
-        correctAnswers: ["Rochester"]
+        image: "Port.png",
+        options: ["Pinza Passafili", "Pinza da Emostasi", "Portaghi da Sutura"],
+        correctAnswers: ["Portaghi da Sutura"]
         },
         {
         title: "Domanda 3/20 <br><br><br> Quale lama può montare questo manico da Bisturi n°4?",
@@ -906,7 +906,7 @@
         correctAnswers: ["Babcock"]
         },
         {
-        title: "Domanda 12/20 <br><br><br> Come si chiama questo strumento?",
+        title: "Domanda 12/20 <br><br><br> Indica la Funzione di questo strumento?",
         type: "checkbox",
         image: "Emostasi.png",
         options: ["Pinze Dissezione", "Pinze Presa", "Pinze Emostasi"],
@@ -929,7 +929,7 @@
         {
         title: "Domanda 15/20 <br><br><br> Indica la funzione di questo strumento?",
         type: "checkbox",
-        image: "Emo_Temp.png",
+        image: "Emo Temp.png",
         options: ["Pinza da Emostasi temporanea", "Pinza da Emostasi Definitiva", "Pinza d Dissezione"],
         correctAnswers: ["Pinza da Emostasi temporanea"]
         },
@@ -950,7 +950,7 @@
         {
         title: "Domanda 18/20 <br><br><br> La Capsula grande è di ausilio per contenere?",
         type: "checkbox",
-        image: "Caps_GR.png",
+        image: "Caps Gr.png",
         options: ["Fisiologica Per piccoli Lavaggi sul Campo operatorio", "Gli Emostatici", "Le garze di piccole dimensioni"],
         correctAnswers: ["Fisiologica Per piccoli Lavaggi sul Campo operatorio"]
         },
@@ -966,7 +966,7 @@
         type: "checkbox",
         image: "Presa.png",
         options: ["Dissezione", "Presa", "Emostasi Definitiva"],
-        correctAnswers: ["Presa"]
+        correctAnswers: ["Emostasi Definitiva"]
         },
 
         ];
@@ -1263,7 +1263,7 @@
         }
 
         function startTimer() {
-        timeLeft = 600;
+        timeLeft = 120;
         document.getElementById("timer").textContent = timeLeft;
         timer = setInterval(() => {
         timeLeft--;
