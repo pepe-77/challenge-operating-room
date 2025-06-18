@@ -1533,37 +1533,23 @@
         });
         }
         function endQuiz() {
-        const datiDaInviare = {
-        ...userData,
-        punteggio: score,
-        risposte: questionResults
-        };
+  const datiDaInviare = {
+    ...userData,
+    punteggio: score,
+    risposte: questionResults,
+    timestamp: new Date().toISOString()
+  };
 
-        // Recupera array esistente o crea uno nuovo
-        let risultatiPrecedenti = JSON.parse(localStorage.getItem("quizRisultatiArray")) || [];
-
-        // Aggiungi i nuovi dati
-        risultatiPrecedenti.push(datiDaInviare);
-
-        // Salva l'array aggiornato
-        localStorage.setItem("quizRisultatiArray", JSON.stringify(risultatiPrecedenti));
-
-        fetch('http://localhost:5000/salva', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datiDaInviare)
-        })
-        .then(res => res.text())
-        .then(msg => {
-        alert(msg);
-
-        window.location.href = 'dati.html';
-        })
-        .catch(err => {
-        console.error('Errore salvataggio:', err);
-        alert('ok');
-        });
-        }
+  db.collection("risultatiQuiz").add(datiDaInviare)
+    .then(() => {
+      alert("✅ Risultati salvati con successo su Firebase!");
+      window.location.href = 'dati.html'; // se hai una pagina dati.html statica
+    })
+    .catch((error) => {
+      console.error("Errore salvataggio Firebase:", error);
+      alert("❌ Errore nel salvataggio dei risultati.");
+    });
+}
     </Script>
     <script>const userData = {
             nome: "Mario",
