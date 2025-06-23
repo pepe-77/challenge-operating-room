@@ -1551,73 +1551,7 @@
     });
 }
     </Script>
-    <script>const userData = {
-            nome: "Mario",
-            cognome: "Rossi",
-            professione: "Infermiere",
-            anniServizio: "10",
-            email: "mario.rossi@example.com"
-        };
-        const score = 160;
-        const questions = new Array(20).fill(0);
-        const questionResults = Array.from({ length: 20 }, (_, i) => ({
-            questionTitle: `Domanda ${i + 1}`,
-            correct: i % 2 === 0,
-            userAnswer: i % 2 === 0 ? "Risposta Corretta" : "Risposta Errata",
-            correctAnswer: "Risposta Corretta"
-        }));
-        document.getElementById('datiAnagraficiDiv').innerHTML = `
-                    <p><strong>Nome:</strong> ${userData.nome}</p>
-                    <p><strong>Cognome:</strong> ${userData.cognome}</p>
-                    <p><strong>Professione:</strong> ${userData.professione}</p>
-                    <p><strong>Anni di Servizio:</strong> ${userData.anniServizio}</p>
-                    <p><strong>Email:</strong> ${userData.email}</p>
-                `;
-        document.getElementById('riepilogoUtenteQuiz').innerHTML = `
-                    <p>Hai risposto correttamente a <strong>${score / 10} domande su ${questions.length}</strong>.</p>
-                    <p>Punteggio totale: <strong>${score} / ${questions.length * 10}</strong></p>
-                `;
-        document.getElementById('results-details').innerHTML = `
-                    <ul>
-                        ${questionResults.map((res, i) => `
-                            <li><strong>Domanda ${i + 1}:</strong> ${res.questionTitle} –
-                            ${res.correct ? '<span style="color:green;">Corretta</span>' : '<span style="color:red;">Sbagliata</span>'}
-                            ${res.userAnswer ? `(Tua risposta: ${res.userAnswer})` : ''}
-                            ${!res.correct && res.correctAnswer ? `(Corretta: ${res.correctAnswer})` : ''}</li>
-                        `).join('')}
-                    </ul>
-                `;
-        new Chart(document.getElementById('radar-chart').getContext('2d'), {
-            type: 'radar',
-            data: {
-                labels: ['Correttezza', 'Velocità', 'Conoscenza', 'Precisione', 'Risposte Corrette', 'Risposte Sbagliate'],
-                datasets: [{
-                    label: 'Prestazioni',
-                    data: [80, 0.5, 80, 80, score / 10, questions.length - score / 10],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: { labels: { font: { size: 14 } } },
-                    title: { display: true, text: 'Radar delle Competenze', font: { size: 18 } }
-                },
-                scales: {
-                    r: {
-                        suggestedMin: 0,
-                        suggestedMax: 100,
-                        pointLabels: { font: { size: 12 } },
-                        ticks: { beginAtZero: true }
-                    }
-                }
-            }
-        });
-        function restartQuiz() {
-            alert("Funzione restart in sviluppo");
-        }
-        </script>
+    
 </body>
 <footer>
     <div align="center">
